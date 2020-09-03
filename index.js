@@ -120,7 +120,8 @@ function doWork() {
   if (gameOver === true && winner > 0) {
     let p = players[winner - 1];
     document.getElementById("output").innerHTML = `${p} wins`;
-  }
+  }else if(gameOver===true)
+    document.getElementById("output").innerHTML = `Match Draw`;
 }
 
 const checkWinner = () => {
