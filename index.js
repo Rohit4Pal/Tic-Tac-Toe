@@ -1,23 +1,27 @@
 let gameOver = false;
 let winner = -1;
 let turn = 1;
-let n = 3;
+let n;
 let gameIsOn = false;
+let board;
 
 //create a n*n matrix
-let matrix = new Array(n);
-for (let i = 0; i < n; i++) {
-  matrix[i] = new Array(n);
-  for (let j = 0; j < n; j++) {
-    matrix[i][j] = "";
-  }
-}
+let matrix;
 
 const startGame = () => {
   //only one time
   if (!gameIsOn) gameIsOn = true;
   else return;
 
+  let x = document.getElementById("choice");
+  n = x.value;
+  matrix = new Array(n);
+  for (let i = 0; i < n; i++) {
+    matrix[i] = new Array(n);
+    for (let j = 0; j < n; j++) {
+      matrix[i][j] = "";
+    }
+  }
   createBoard();
 
   /*  if (gameOver) {
@@ -27,9 +31,23 @@ const startGame = () => {
 }*/
 };
 
-function createBoard() {
-  let board = document.querySelector(".game-container");
+const restartGame=()=>{
+  gameOver=false;
+  deleteBoard();
+  createBoard();
+}
 
+function deleteBoard(){ 
+  board = document.querySelector(".game-container");
+  //console.log(board);
+  board.removeChild(document.querySelectorAll(".row").removeChild(document.querySelectorAll(".col")));
+  console.log(board);
+}
+
+function createBoard() {
+  board = document.querySelector(".game-container");
+
+  console.log(`size of the grid is ${n}`);
   for (let i = 0; i < n; i++) {
     let row = document.createElement("div");
     board.appendChild(row);
@@ -63,14 +81,15 @@ const addStyle = () => {
   }
 
   let k = 0;
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
       let index = i + "" + j;
       cols[k].classList.add(`${index}`);
       cols[k].addEventListener("click", doWork);
       k++;
     }
   }
+  console.log(matrix);
 };
 
 //players.push(player1.value);
